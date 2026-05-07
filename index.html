@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techies Technologies — Build Scalable Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080A0E;
+    --dark: #0D1117;
+    --card: #111620;
+    --card2: #141923;
+    --charcoal: #1C2333;
+    --graphite: #242B3D;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: rgba(201,168,76,0.15);
+    --champagne: #F5E6C8;
+    --text: #F0F2F7;
+    --muted: #8A93A8;
+    --blue-accent: #1A5FBF;
+    --blue-glow: rgba(26,95,191,0.2);
+    --font: 'Montserrat', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--black);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(8,10,14,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: none;
+    padding: 11px 26px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 140px 60px 80px;
+    gap: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 75% 50%, rgba(26,95,191,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+  }
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: 1px solid rgba(201,168,76,0.35);
+    background: rgba(201,168,76,0.07);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 36px;
+  }
+  .hero-badge-dot {
+    width: 5px; height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .hero-h1 {
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+  .hero-h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #A8832E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 460px;
+    margin-bottom: 48px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    border: none;
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.3);
+  }
+  .btn-secondary {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border2);
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+  /* ── HERO RIGHT — 3D VISUAL ── */
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-visual-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .vis-main {
+    background: linear-gradient(160deg, #141C2E 0%, #0D1117 100%);
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.08);
+  }
+  .vis-header {
+    background: var(--charcoal);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .vis-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .vis-title-bar {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .vis-body { padding: 24px; }
+
+  /* Dashboard chart lines */
+  .dash-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .dash-card-mini {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 14px;
+  }
+  .dash-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .dash-value { font-size: 22px; font-weight: 800; color: var(--text); }
+  .dash-delta { font-size: 9px; font-weight: 600; color: #4ECB8D; margin-top: 2px; }
+
+  /* Fake chart bars */
+  .chart-area {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 80px;
+  }
+  .bar {
+    flex: 1;
+    border-radius: 1px 1px 0 0;
+    background: linear-gradient(180deg, var(--gold) 0%, rgba(201,168,76,0.3) 100%);
+    animation: barGrow 1.2s ease-out forwards;
+    transform-origin: bottom;
+  }
+  @keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+  /* Flow diagram */
+  .flow-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flow-node {
+    flex: 1;
+    background: rgba(26,95,191,0.15);
+    border: 1px solid rgba(26,95,191,0.4);
+    border-radius: 2px;
+    padding: 8px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #7BA9EF;
+    text-transform: uppercase;
+  }
+  .flow-arrow { font-size: 12px; color: var(--gold); flex-shrink: 0; }
+
+  /* Floating cards */
+  .float-card {
+    position: absolute;
+    background: linear-gradient(135deg, #141C2E, #0D1117);
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 12px 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .float-1 {
+    top: -30px; right: -30px;
+    width: 160px;
+    animation: floatA 4s ease-in-out infinite;
+  }
+  .float-2 {
+    bottom: -20px; left: -24px;
+    width: 180px;
+    animation: floatB 5s ease-in-out infinite;
+  }
+  @keyframes floatA { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+  @keyframes floatB { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(6px); } }
+
+  .fc-label { font-size: 8px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .fc-value { font-size: 18px; font-weight: 800; color: var(--gold); }
+  .fc-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* gold line accent on left border */
+  .float-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 36px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 0 40px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 120px 60px; }
+  .section-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(32px, 3.5vw, 50px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 520px;
+  }
+
+  /* ── SHOWCASE STRIP ── */
+  #showcase {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .showcase-label {
+    text-align: center;
+    padding: 60px 60px 40px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .showcase-track {
+    display: flex;
+    gap: 20px;
+    animation: scrollLeft 40s linear infinite;
+    width: max-content;
+    padding: 0 20px 60px;
+  }
+  .showcase-track:hover { animation-play-state: paused; }
+  @keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .showcase-card {
+    width: 300px;
+    height: 180px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .showcase-card:hover { border-color: rgba(201,168,76,0.3); }
+
+  .sc-inner {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sc-name { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+  .sc-title { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+
+  .sc-bars { display: flex; align-items: flex-end; gap: 4px; height: 40px; }
+  .sc-bar { flex: 1; background: linear-gradient(180deg, rgba(201,168,76,0.6), rgba(201,168,76,0.1)); border-radius: 1px 1px 0 0; }
+
+  .sc-mobile { display: flex; gap: 8px; align-items: flex-end; }
+  .sc-phone {
+    width: 46px; height: 80px;
+    background: var(--charcoal);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 6px;
+  }
+  .sc-phone-screen { background: var(--graphite); border-radius: 3px; height: 100%; }
+
+  .sc-nodes { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sc-node {
+    font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid rgba(26,95,191,0.4);
+    color: #7BA9EF;
+    background: rgba(26,95,191,0.1);
+    border-radius: 1px;
+  }
+
+  /* ── SERVICES ── */
+  #services { background: var(--dark); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 70px;
+  }
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 50px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 0% 0%, rgba(201,168,76,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .service-card:hover { border-color: rgba(201,168,76,0.2); background: #131820; }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    border: 1px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 30px;
+    position: relative;
+    background: rgba(255,255,255,0.03);
+  }
+  .service-icon svg { width: 24px; height: 24px; stroke: var(--gold); stroke-width: 1.5; fill: none; }
+
+  .service-num {
+    position: absolute;
+    top: 30px; right: 30px;
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .service-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .service-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 30px;
+  }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .s-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── PROCESS ── */
+  #process {
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+  #process::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(26,95,191,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .process-header { margin-bottom: 80px; }
+  .process-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .process-track::before {
+    content: '';
+    position: absolute;
+    top: 42px;
+    left: 12.5%; right: 12.5%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+    opacity: 0.25;
+  }
+
+  .process-step { padding: 0 30px; text-align: center; position: relative; }
+  .ps-num {
+    width: 84px; height: 84px;
+    margin: 0 auto 32px;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--card);
+    position: relative;
+  }
+  .ps-num-inner {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+  .ps-num::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+  .ps-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .ps-desc { font-size: 13px; line-height: 1.7; color: var(--muted); }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--dark); }
+  .projects-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2px;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s;
+    cursor: default;
+  }
+  .project-card:hover { border-color: rgba(201,168,76,0.2); }
+  .project-card.featured {
+    grid-column: 1 / -1;
+  }
+
+  .proj-visual {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .project-card.featured .proj-visual { height: 340px; }
+  .project-card:not(.featured) .proj-visual { height: 220px; }
+
+  .proj-screen {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #0D1A2E 0%, #07111F 100%);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .proj-topbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .proj-tbl { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .proj-tbl-active { color: var(--gold); }
+  .proj-dots { display: flex; gap: 6px; margin-left: auto; }
+  .proj-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); }
+
+  .proj-row { display: flex; gap: 12px; }
+  .proj-metric {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 1px;
+    padding: 14px;
+  }
+  .pm-l { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .pm-v { font-size: 20px; font-weight: 800; color: var(--text); }
+  .pm-g { font-size: 9px; font-weight: 700; color: #4ECB8D; margin-top: 2px; }
+
+  .proj-big-chart {
+    flex: 1;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 1px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sparkline {
+    width: 100%;
+    height: 50px;
+    position: relative;
+  }
+  .sparkline svg { width: 100%; height: 100%; }
+
+  .proj-table {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .pt-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .pt-row.header { color: rgba(255,255,255,0.3); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .pt-row:last-child { border-bottom: none; }
+  .pt-status {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 1px;
+    display: inline-block;
+  }
+  .pt-live { background: rgba(78,203,141,0.15); color: #4ECB8D; border: 1px solid rgba(78,203,141,0.3); }
+  .pt-build { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .pt-review { background: rgba(26,95,191,0.15); color: #7BA9EF; border: 1px solid rgba(26,95,191,0.4); }
+
+  .proj-info { padding: 28px 32px 32px; }
+  .proj-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .proj-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; margin-bottom: 8px; }
+  .proj-desc { font-size: 13px; line-height: 1.7; color: var(--muted); }
+
+  /* ── WHY TECHIES ── */
+  #why {
+    background: var(--black);
+    position: relative;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 0;
+  }
+  .why-left { padding-top: 20px; }
+  .why-points { margin-top: 60px; display: flex; flex-direction: column; gap: 0; }
+  .why-point {
+    display: flex;
+    gap: 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .why-point:first-child { border-top: 1px solid var(--border); }
+  .wp-num {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    min-width: 28px;
+    padding-top: 3px;
+  }
+  .wp-content {}
+  .wp-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .wp-desc { font-size: 13px; line-height: 1.7; color: var(--muted); }
+
+  .why-right {
+    position: relative;
+  }
+  .why-visual {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .why-visual::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .wv-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 30px; }
+  .wv-bars { display: flex; flex-direction: column; gap: 16px; }
+  .wv-bar-item {}
+  .wv-bar-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .wv-bar-label span:last-child { color: var(--text); font-weight: 700; }
+  .wv-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .wv-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: fillBar 1.5s ease-out forwards;
+  }
+  @keyframes fillBar { to { transform: scaleX(1); } }
+
+  .wv-spacer { height: 40px; }
+  .wv-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .wv-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+  }
+  .wv-tag-gold {
+    border-color: rgba(201,168,76,0.4);
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  /* ── CTA ── */
+  #cta {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 140px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #cta::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .cta-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: block; }
+  .cta-h {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .cta-h em { font-style: normal; color: var(--gold); }
+  .cta-sub { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto 52px; line-height: 1.75; }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-wa {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border2);
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-wa:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 50px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+  .footer-logo { font-size: 16px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+  .footer-logo span { color: var(--gold); }
+  .footer-links { display: flex; gap: 30px; list-style: none; }
+  .footer-links a { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+  /* ── DECORATIVE LINES ── */
+  .line-h {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-ind {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { width: 40px; opacity: 1; }
+    50% { width: 20px; opacity: 0.4; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 50px; }
+    section { padding: 80px 24px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 36px 24px; }
+    .stat-item { padding: 20px; border-right: none; border-bottom: 1px solid var(--border); }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-track { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-track::before { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: unset; }
+    .why-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .hero-visual-wrap { max-width: 100%; }
+    .float-1, .float-2 { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="logo">Techies<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#why">Why Us</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Book a Call</button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Now Building for GCC Enterprises
+    </div>
+
+    <h1 class="hero-h1">
+      Build scalable systems<br>for your <em>business.</em>
+    </h1>
+
+    <p class="hero-sub">
+      AI automation, custom development, and managed services — engineered for modern enterprises across Saudi Arabia, UAE, and the wider GCC.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#cta" class="btn-primary">Book a Call</a>
+      <a href="#projects" class="btn-secondary">View Projects</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual-wrap">
+
+      <!-- Floating card top-right -->
+      <div class="float-card float-1">
+        <div class="fc-label">Automation Active</div>
+        <div class="fc-value">97.4%</div>
+        <div class="fc-sub">System uptime ↑ this month</div>
+      </div>
+
+      <!-- Main dashboard visual -->
+      <div class="vis-main">
+        <div class="vis-header">
+          <div class="vis-dot" style="background:#FF5F57"></div>
+          <div class="vis-dot" style="background:#FFBD2E"></div>
+          <div class="vis-dot" style="background:#28CA42"></div>
+          <div class="vis-title-bar">Analytics · Enterprise Dashboard</div>
+        </div>
+        <div class="vis-body">
+          <div class="dash-row">
+            <div class="dash-card-mini">
+              <div class="dash-label">Revenue</div>
+              <div class="dash-value">4.2M</div>
+              <div class="dash-delta">↑ 18.4% vs last Q</div>
+            </div>
+            <div class="dash-card-mini">
+              <div class="dash-label">Active Users</div>
+              <div class="dash-value">18.7K</div>
+              <div class="dash-delta">↑ 32% growth</div>
+            </div>
+            <div class="dash-card-mini">
+              <div class="dash-label">AI Tasks</div>
+              <div class="dash-value">94K</div>
+              <div class="dash-delta">↑ automated</div>
+            </div>
+          </div>
+
+          <div class="chart-area">
+            <div class="dash-label" style="margin-bottom:12px">Monthly Performance</div>
+            <div class="chart-bars">
+              <div class="bar" style="height:45%;animation-delay:0.0s"></div>
+              <div class="bar" style="height:62%;animation-delay:0.05s"></div>
+              <div class="bar" style="height:38%;animation-delay:0.1s"></div>
+              <div class="bar" style="height:75%;animation-delay:0.15s"></div>
+              <div class="bar" style="height:55%;animation-delay:0.2s"></div>
+              <div class="bar" style="height:88%;animation-delay:0.25s"></div>
+              <div class="bar" style="height:65%;animation-delay:0.3s"></div>
+              <div class="bar" style="height:92%;animation-delay:0.35s"></div>
+              <div class="bar" style="height:72%;animation-delay:0.4s"></div>
+              <div class="bar" style="height:100%;animation-delay:0.45s;background:linear-gradient(180deg,#E8C97A,rgba(201,168,76,0.4))"></div>
+            </div>
+          </div>
+
+          <div class="dash-label" style="margin-bottom:10px">Automation Pipeline</div>
+          <div class="flow-area">
+            <div class="flow-node">Ingest</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Process</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">AI Model</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Deploy</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating card bottom-left -->
+      <div class="float-card float-2">
+        <div class="fc-label">Latest Deploy</div>
+        <div class="fc-value" style="font-size:14px;color:var(--text)">CRM v4.2 · Live</div>
+        <div class="fc-sub" style="color:#4ECB8D">● All systems operational</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">80<span>+</span></div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">6<span>+</span></div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">99<span>%</span></div>
+    <div class="stat-label">Client Retention</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">14<span>+</span></div>
+    <div class="stat-label">GCC Clients</div>
+  </div>
+</div>
+
+<!-- ── SHOWCASE STRIP ── -->
+<section id="showcase">
+  <div class="showcase-label">Recent Work · Enterprise Builds · Live Systems</div>
+  <div class="showcase-track">
+    <!-- Cards ×2 for infinite loop illusion -->
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Enterprise ERP</div><div class="sc-title">Operations Hub</div></div>
+      <div class="sc-bars">
+        <div class="sc-bar" style="height:40%"></div><div class="sc-bar" style="height:70%"></div>
+        <div class="sc-bar" style="height:55%"></div><div class="sc-bar" style="height:90%"></div>
+        <div class="sc-bar" style="height:65%"></div><div class="sc-bar" style="height:80%"></div>
+        <div class="sc-bar" style="height:45%"></div><div class="sc-bar" style="height:100%"></div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Mobile App</div><div class="sc-title">B2C Platform</div></div>
+      <div class="sc-mobile">
+        <div class="sc-phone"><div class="sc-phone-screen"></div></div>
+        <div class="sc-phone" style="height:64px;width:36px"><div class="sc-phone-screen"></div></div>
+        <div class="sc-phone" style="height:72px;width:40px"><div class="sc-phone-screen"></div></div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">AI Automation</div><div class="sc-title">Workflow Engine</div></div>
+      <div class="sc-nodes">
+        <div class="sc-node">Trigger</div><div class="sc-node">Filter</div>
+        <div class="sc-node">AI Node</div><div class="sc-node">Action</div>
+        <div class="sc-node">Notify</div><div class="sc-node">Log</div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Fintech</div><div class="sc-title">Payment Gateway</div></div>
+      <div class="sc-bars">
+        <div class="sc-bar" style="height:80%"></div><div class="sc-bar" style="height:60%"></div>
+        <div class="sc-bar" style="height:95%"></div><div class="sc-bar" style="height:50%"></div>
+        <div class="sc-bar" style="height:70%"></div><div class="sc-bar" style="height:85%"></div>
+        <div class="sc-bar" style="height:65%"></div><div class="sc-bar" style="height:75%"></div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Managed Services</div><div class="sc-title">Infra Dashboard</div></div>
+      <div class="sc-nodes">
+        <div class="sc-node">Cloud</div><div class="sc-node">DB</div>
+        <div class="sc-node">API</div><div class="sc-node">CDN</div>
+        <div class="sc-node">Monitor</div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">MVP Build</div><div class="sc-title">SaaS Platform</div></div>
+      <div class="sc-bars">
+        <div class="sc-bar" style="height:50%"></div><div class="sc-bar" style="height:75%"></div>
+        <div class="sc-bar" style="height:60%"></div><div class="sc-bar" style="height:100%"></div>
+        <div class="sc-bar" style="height:40%"></div><div class="sc-bar" style="height:88%"></div>
+        <div class="sc-bar" style="height:55%"></div><div class="sc-bar" style="height:92%"></div>
+      </div>
+    </div></div>
+    <!-- Duplicate set for infinite scroll -->
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Enterprise ERP</div><div class="sc-title">Operations Hub</div></div>
+      <div class="sc-bars">
+        <div class="sc-bar" style="height:40%"></div><div class="sc-bar" style="height:70%"></div>
+        <div class="sc-bar" style="height:55%"></div><div class="sc-bar" style="height:90%"></div>
+        <div class="sc-bar" style="height:65%"></div><div class="sc-bar" style="height:80%"></div>
+        <div class="sc-bar" style="height:45%"></div><div class="sc-bar" style="height:100%"></div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Mobile App</div><div class="sc-title">B2C Platform</div></div>
+      <div class="sc-mobile">
+        <div class="sc-phone"><div class="sc-phone-screen"></div></div>
+        <div class="sc-phone" style="height:64px;width:36px"><div class="sc-phone-screen"></div></div>
+        <div class="sc-phone" style="height:72px;width:40px"><div class="sc-phone-screen"></div></div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">AI Automation</div><div class="sc-title">Workflow Engine</div></div>
+      <div class="sc-nodes">
+        <div class="sc-node">Trigger</div><div class="sc-node">Filter</div>
+        <div class="sc-node">AI Node</div><div class="sc-node">Action</div>
+        <div class="sc-node">Notify</div><div class="sc-node">Log</div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Fintech</div><div class="sc-title">Payment Gateway</div></div>
+      <div class="sc-bars">
+        <div class="sc-bar" style="height:80%"></div><div class="sc-bar" style="height:60%"></div>
+        <div class="sc-bar" style="height:95%"></div><div class="sc-bar" style="height:50%"></div>
+        <div class="sc-bar" style="height:70%"></div><div class="sc-bar" style="height:85%"></div>
+        <div class="sc-bar" style="height:65%"></div><div class="sc-bar" style="height:75%"></div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">Managed Services</div><div class="sc-title">Infra Dashboard</div></div>
+      <div class="sc-nodes">
+        <div class="sc-node">Cloud</div><div class="sc-node">DB</div>
+        <div class="sc-node">API</div><div class="sc-node">CDN</div>
+        <div class="sc-node">Monitor</div>
+      </div>
+    </div></div>
+    <div class="showcase-card"><div class="sc-inner">
+      <div><div class="sc-name">MVP Build</div><div class="sc-title">SaaS Platform</div></div>
+      <div class="sc-bars">
+        <div class="sc-bar" style="height:50%"></div><div class="sc-bar" style="height:75%"></div>
+        <div class="sc-bar" style="height:60%"></div><div class="sc-bar" style="height:100%"></div>
+        <div class="sc-bar" style="height:40%"></div><div class="sc-bar" style="height:88%"></div>
+        <div class="sc-bar" style="height:55%"></div><div class="sc-bar" style="height:92%"></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <span class="section-tag">What We Build</span>
+  <h2 class="section-title">End-to-end technology,<br>built for scale.</h2>
+  <p class="section-sub">From a single automation to a full enterprise platform — we design and engineer systems that grow with your business.</p>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3 class="service-title">AI & Automation</h3>
+      <p class="service-desc">Intelligent workflows, LLM integrations, and process automation that eliminate repetitive work and drive operational efficiency at scale.</p>
+      <div class="service-tags">
+        <span class="s-tag">Machine Learning</span>
+        <span class="s-tag">LLM Integration</span>
+        <span class="s-tag">Process Automation</span>
+        <span class="s-tag">Data Pipelines</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <h3 class="service-title">Custom Development</h3>
+      <p class="service-desc">Full-stack web and mobile applications, built from the ground up to your exact specifications — scalable, maintainable, and enterprise-ready.</p>
+      <div class="service-tags">
+        <span class="s-tag">Web Applications</span>
+        <span class="s-tag">Mobile Apps</span>
+        <span class="s-tag">API Development</span>
+        <span class="s-tag">System Integration</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3 class="service-title">Managed Services</h3>
+      <p class="service-desc">Ongoing infrastructure management, monitoring, and support — so your systems stay fast, secure, and operational around the clock.</p>
+      <div class="service-tags">
+        <span class="s-tag">Cloud Management</span>
+        <span class="s-tag">24/7 Monitoring</span>
+        <span class="s-tag">Security</span>
+        <span class="s-tag">DevOps</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h3 class="service-title">MVP Development</h3>
+      <p class="service-desc">Go from concept to live product in weeks. We scope, design, and ship your minimum viable product with speed and precision — ready for real users and investment.</p>
+      <div class="service-tags">
+        <span class="s-tag">Rapid Prototyping</span>
+        <span class="s-tag">Product Strategy</span>
+        <span class="s-tag">UX Design</span>
+        <span class="s-tag">Launch-Ready</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+  <div class="process-header">
+    <span class="section-tag">How We Work</span>
+    <h2 class="section-title">Structured execution.<br>Predictable results.</h2>
+  </div>
+  <div class="process-track">
+    <div class="process-step">
+      <div class="ps-num"><div class="ps-num-inner">01</div></div>
+      <div class="ps-title">Discovery</div>
+      <div class="ps-desc">Deep-dive into your business goals, technical requirements, and constraints. We don't start building until we fully understand the problem.</div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num"><div class="ps-num-inner">02</div></div>
+      <div class="ps-title">Strategy</div>
+      <div class="ps-desc">Architecture planning, technology selection, and roadmap definition. Every decision is made for long-term scalability, not short-term convenience.</div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num"><div class="ps-num-inner">03</div></div>
+      <div class="ps-title">Development</div>
+      <div class="ps-desc">Agile sprints with transparent communication. Weekly demos and continuous delivery — you see progress at every stage, not just at the end.</div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num"><div class="ps-num-inner">04</div></div>
+      <div class="ps-title">Scale</div>
+      <div class="ps-desc">Launch, monitor, optimize. We stay engaged post-launch with managed support and continued iteration as your business grows.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <span class="section-tag">Selected Work</span>
+      <h2 class="section-title">Systems built to<br>perform at scale.</h2>
+    </div>
+    <a href="#cta" class="btn-secondary" style="white-space:nowrap">View All Work</a>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Featured project -->
+    <div class="project-card featured">
+      <div class="proj-visual">
+        <div class="proj-screen">
+          <div class="proj-topbar">
+            <span class="proj-tbl proj-tbl-active">Overview</span>
+            <span class="proj-tbl" style="margin-left:16px">Analytics</span>
+            <span class="proj-tbl" style="margin-left:16px">Team</span>
+            <span class="proj-tbl" style="margin-left:16px">Settings</span>
+            <div class="proj-dots"><div class="proj-dot"></div><div class="proj-dot"></div><div class="proj-dot"></div></div>
+          </div>
+          <div class="proj-row" style="margin-top:12px">
+            <div class="proj-metric"><div class="pm-l">Total Revenue</div><div class="pm-v">SAR 12.4M</div><div class="pm-g">↑ 24.6%</div></div>
+            <div class="proj-metric"><div class="pm-l">Orders</div><div class="pm-v">34,218</div><div class="pm-g">↑ 18.2%</div></div>
+            <div class="proj-metric"><div class="pm-l">Customers</div><div class="pm-v">8,902</div><div class="pm-g">↑ 41.0%</div></div>
+            <div class="proj-metric"><div class="pm-l">Avg. Value</div><div class="pm-v">SAR 362</div><div class="pm-g">↑ 5.4%</div></div>
+          </div>
+          <div class="proj-row" style="flex:1">
+            <div class="proj-big-chart" style="flex:2">
+              <div class="pm-l" style="margin-bottom:8px">Revenue Trend</div>
+              <svg viewBox="0 0 100 50" preserveAspectRatio="none" style="width:100%;height:44px">
+                <defs>
+                  <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,40 L10,35 L20,38 L30,28 L40,30 L50,20 L60,22 L70,14 L80,10 L90,8 L100,4 L100,50 L0,50Z" fill="url(#cg)"/>
+                <path d="M0,40 L10,35 L20,38 L30,28 L40,30 L50,20 L60,22 L70,14 L80,10 L90,8 L100,4" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="proj-table" style="flex:3;border:none;background:transparent">
+              <div class="pt-row header"><span>Product</span><span>Units</span><span>Revenue</span><span>Status</span></div>
+              <div class="pt-row"><span>Enterprise CRM</span><span>142</span><span>4.2M</span><span><span class="pt-status pt-live">Live</span></span></div>
+              <div class="pt-row"><span>Analytics Engine</span><span>89</span><span>3.1M</span><span><span class="pt-status pt-live">Live</span></span></div>
+              <div class="pt-row"><span>Mobile Platform</span><span>211</span><span>2.8M</span><span><span class="pt-status pt-build">Building</span></span></div>
+              <div class="pt-row"><span>AI Automation</span><span>67</span><span>2.3M</span><span><span class="pt-status pt-review">Review</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">Enterprise · Saudi Arabia</div>
+        <div class="proj-title">Full-Stack Enterprise Operations Platform</div>
+        <div class="proj-desc">End-to-end business management system built for a major Saudi retail group. Custom ERP, analytics dashboard, and automated reporting — integrated with 3 legacy systems.</div>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <div class="proj-visual">
+        <div class="proj-screen">
+          <div class="proj-topbar">
+            <span class="proj-tbl proj-tbl-active">AI Pipeline</span>
+            <div class="proj-dots" style="margin-left:auto"><div class="proj-dot"></div></div>
+          </div>
+          <div class="sc-nodes" style="margin-top:12px;gap:8px">
+            <div class="sc-node" style="font-size:9px;padding:6px 12px">Data Input</div>
+            <div style="color:var(--gold);font-size:14px;display:flex;align-items:center">→</div>
+            <div class="sc-node" style="font-size:9px;padding:6px 12px">Preprocessing</div>
+            <div style="color:var(--gold);font-size:14px;display:flex;align-items:center">→</div>
+            <div class="sc-node" style="font-size:9px;padding:6px 12px;border-color:rgba(201,168,76,0.5);color:var(--gold);background:rgba(201,168,76,0.1)">AI Model</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <div class="sc-node" style="font-size:9px;padding:6px 12px">Validation</div>
+            <div style="color:var(--gold);font-size:14px;display:flex;align-items:center">→</div>
+            <div class="sc-node" style="font-size:9px;padding:6px 12px">Output</div>
+            <div style="color:var(--gold);font-size:14px;display:flex;align-items:center">→</div>
+            <div class="sc-node" style="font-size:9px;padding:6px 12px;background:rgba(78,203,141,0.1);border-color:rgba(78,203,141,0.4);color:#4ECB8D">Deployed</div>
+          </div>
+          <div class="proj-row" style="margin-top:14px">
+            <div class="proj-metric"><div class="pm-l">Accuracy</div><div class="pm-v" style="font-size:16px">98.7%</div></div>
+            <div class="proj-metric"><div class="pm-l">Daily Runs</div><div class="pm-v" style="font-size:16px">42K</div></div>
+            <div class="proj-metric"><div class="pm-l">Latency</div><div class="pm-v" style="font-size:16px">120ms</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">AI Automation · UAE</div>
+        <div class="proj-title">Intelligent Document Processing Engine</div>
+        <div class="proj-desc">Custom AI pipeline that automates document classification and data extraction for a Dubai financial services company.</div>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card">
+      <div class="proj-visual">
+        <div class="proj-screen" style="align-items:center;justify-content:center;flex-direction:row;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+            <div style="width:56px;height:100px;background:var(--charcoal);border:1px solid var(--border2);border-radius:8px;padding:6px;">
+              <div style="background:var(--graphite);border-radius:4px;height:100%;display:flex;flex-direction:column;gap:4px;padding:6px;">
+                <div style="height:6px;background:var(--gold);border-radius:1px;opacity:0.7"></div>
+                <div style="height:4px;background:var(--border2);border-radius:1px"></div>
+                <div style="height:4px;background:var(--border2);border-radius:1px;width:60%"></div>
+                <div style="flex:1;background:rgba(26,95,191,0.15);border-radius:2px;margin-top:4px"></div>
+              </div>
+            </div>
+            <div style="font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">iOS</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+            <div style="width:72px;height:120px;background:var(--charcoal);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:8px;box-shadow:0 0 30px rgba(201,168,76,0.1)">
+              <div style="background:var(--graphite);border-radius:4px;height:100%;display:flex;flex-direction:column;gap:5px;padding:8px;">
+                <div style="height:8px;background:var(--gold);border-radius:1px;opacity:0.9"></div>
+                <div style="height:5px;background:var(--border2);border-radius:1px"></div>
+                <div style="height:5px;background:var(--border2);border-radius:1px;width:70%"></div>
+                <div style="flex:1;background:rgba(26,95,191,0.2);border-radius:2px;margin-top:6px"></div>
+                <div style="height:16px;background:rgba(201,168,76,0.2);border-radius:2px;border:1px solid rgba(201,168,76,0.3)"></div>
+              </div>
+            </div>
+            <div style="font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">Primary</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+            <div style="width:56px;height:100px;background:var(--charcoal);border:1px solid var(--border2);border-radius:8px;padding:6px;">
+              <div style="background:var(--graphite);border-radius:4px;height:100%;display:flex;flex-direction:column;gap:4px;padding:6px;">
+                <div style="height:6px;background:var(--gold);border-radius:1px;opacity:0.7"></div>
+                <div style="height:4px;background:var(--border2);border-radius:1px"></div>
+                <div style="height:4px;background:var(--border2);border-radius:1px;width:60%"></div>
+                <div style="flex:1;background:rgba(26,95,191,0.15);border-radius:2px;margin-top:4px"></div>
+              </div>
+            </div>
+            <div style="font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">Android</div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-info">
+        <div class="proj-tag">Mobile · B2C · GCC</div>
+        <div class="proj-title">Cross-Platform Consumer App</div>
+        <div class="proj-desc">iOS and Android application serving 18,000+ active users across the GCC with real-time data sync and offline-first architecture.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── WHY TECHIES ── -->
+<section id="why">
+  <div class="why-grid">
+    <div class="why-left">
+      <span class="section-tag">Why Techies</span>
+      <h2 class="section-title">The difference is in<br>the execution.</h2>
+      <p class="section-sub" style="margin-bottom:0">Most agencies promise results. We engineer them. Every system we build is designed from day one to scale, survive, and outperform.</p>
+
+      <div class="why-points">
+        <div class="why-point">
+          <div class="wp-num">01</div>
+          <div class="wp-content">
+            <div class="wp-title">Scalable Architecture</div>
+            <div class="wp-desc">Systems designed to handle 10x your current load without a rebuild. We architect for where you're going, not where you are.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="wp-num">02</div>
+          <div class="wp-content">
+            <div class="wp-title">Startup Speed, Enterprise Quality</div>
+            <div class="wp-desc">We move fast without cutting corners. Agile execution with the rigor and standards of an enterprise engineering team.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="wp-num">03</div>
+          <div class="wp-content">
+            <div class="wp-title">Direct Communication</div>
+            <div class="wp-desc">No account managers, no noise. You speak directly to the engineers building your product — at every stage.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="wp-num">04</div>
+          <div class="wp-content">
+            <div class="wp-title">Long-Term Partnership</div>
+            <div class="wp-desc">We don't disappear after launch. Our managed services team keeps your systems optimised, secure, and evolving.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="wp-num">05</div>
+          <div class="wp-content">
+            <div class="wp-title">GCC Market Expertise</div>
+            <div class="wp-desc">We understand the regional market — compliance requirements, local integrations, and the business culture of the Gulf. We're not an outsider.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-right">
+      <div class="why-visual">
+        <div class="wv-title">Performance Benchmarks</div>
+        <div class="wv-bars">
+          <div class="wv-bar-item">
+            <div class="wv-bar-label"><span>On-time delivery</span><span>96%</span></div>
+            <div class="wv-track"><div class="wv-fill" style="width:96%;animation-delay:0.1s"></div></div>
+          </div>
+          <div class="wv-bar-item">
+            <div class="wv-bar-label"><span>Client satisfaction</span><span>99%</span></div>
+            <div class="wv-track"><div class="wv-fill" style="width:99%;animation-delay:0.25s"></div></div>
+          </div>
+          <div class="wv-bar-item">
+            <div class="wv-bar-label"><span>System uptime (avg)</span><span>99.8%</span></div>
+            <div class="wv-track"><div class="wv-fill" style="width:99.8%;animation-delay:0.4s"></div></div>
+          </div>
+          <div class="wv-bar-item">
+            <div class="wv-bar-label"><span>Scope accuracy</span><span>94%</span></div>
+            <div class="wv-track"><div class="wv-fill" style="width:94%;animation-delay:0.55s"></div></div>
+          </div>
+          <div class="wv-bar-item">
+            <div class="wv-bar-label"><span>Repeat clients</span><span>88%</span></div>
+            <div class="wv-track"><div class="wv-fill" style="width:88%;animation-delay:0.7s"></div></div>
+          </div>
+        </div>
+
+        <div class="wv-spacer"></div>
+
+        <div class="wv-title">Technologies We Use</div>
+        <div class="wv-tags">
+          <span class="wv-tag wv-tag-gold">React</span>
+          <span class="wv-tag wv-tag-gold">Node.js</span>
+          <span class="wv-tag wv-tag-gold">Python</span>
+          <span class="wv-tag">Flutter</span>
+          <span class="wv-tag">AWS</span>
+          <span class="wv-tag">OpenAI</span>
+          <span class="wv-tag">PostgreSQL</span>
+          <span class="wv-tag">Docker</span>
+          <span class="wv-tag wv-tag-gold">Next.js</span>
+          <span class="wv-tag">Redis</span>
+          <span class="wv-tag">Kubernetes</span>
+          <span class="wv-tag">Terraform</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <span class="cta-tag">Ready to Build?</span>
+  <h2 class="cta-h">Let's build something<br><em>scalable.</em></h2>
+  <p class="cta-sub">Tell us about your project. We'll come back within 24 hours with a clear scope, timeline, and an honest assessment.</p>
+  <div class="cta-btns">
+    <a href="https://cal.com" target="_blank" class="btn-primary">Schedule a Call</a>
+    <a href="https://wa.me/966500000000" target="_blank" class="btn-wa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3-8.63 2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17v-.08z"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Techies<span>.</span>Technologies</div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="mailto:hello@techies.co">Email</a></li>
+    <li><a href="https://wa.me/966500000000" target="_blank">WhatsApp</a></li>
+    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Techies Technologies</div>
+</footer>
+
+</body>
+</html>
